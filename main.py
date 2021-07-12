@@ -1,16 +1,25 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import  Marshmallow
+import os
 
 
-# Press the green button in the gutter to run the script.
+## init
+
+election = Flask(__name__)
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+## set up data base
+
+election.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://' + os.path.join(basedir, 'election_db.sql')
+election.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+database = SQLAlchemy(election)
+marsh = Marshmallow(election)
+
+
+## fill database full of data lol
+
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    election.run(debug=True)
